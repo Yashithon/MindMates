@@ -601,7 +601,7 @@ if 'last_prediction' not in st.session_state:
 col1, col2 = st.columns([2, 1])
 
 with col1:
-    st.markdown('<div class="input-container">', unsafe_allow_html=True)
+    # st.markdown('<div class="input-container">', unsafe_allow_html=True)
     st.markdown("### Share What's on Your Mind")
     st.markdown('<p class="input-description">This is a safe space to express your thoughts and feelings. MindMates will help provide context about what you\'re experiencing. Remember, this is for awareness and support—professional guidance is always recommended for your wellbeing.</p>', unsafe_allow_html=True)
     
