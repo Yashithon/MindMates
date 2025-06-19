@@ -30,13 +30,30 @@ y_pred = clf.predict(X_test_tfidf)
 print(classification_report(y_test, y_pred))
 
 # Optional: Test single sentence
+import numpy as np
+
 def predict_tag(text):
-    text = text.lower()
+    text = text.strip().lower()
+
+    # Define list of inappropriate/swear words (expandable)
+    banned_words = {"fuck", "shit", "damn", "bitch", "crap", "asshole", "dumb", "stupid", "kill", "die", "hell"}
+
+    # Split input into words
+    words = text.split()
+
+    # Reject empty or too-short input
+    if len(words) < 2:
+        return "Please enter a complete sentence related to how you feel."
+
+    # Reject if input is mostly profanity
+    if all(word in banned_words for word in words):
+        return "Please avoid using offensive or inappropriate words. Try describing how you feel instead."
+
+    # Vectorize and predict
     text_vec = vectorizer.transform([text])
-    return clf.predict(text_vec)[0]
-
-print("Predicted tag:", predict_tag("I am feeling anxious and alone"))
-
+    prediction = clf.predict(text_vec)[0]
+    return prediction
+print(predict_tag("Guys! Itâ€™s finally my turn to announce losing 200 pounds in one day! I lost 200 pounds today!"))
 # Save model and vectorizer
 joblib.dump(clf, "mental_health_model.pkl")
 joblib.dump(vectorizer, "vectorizer.pkl")
